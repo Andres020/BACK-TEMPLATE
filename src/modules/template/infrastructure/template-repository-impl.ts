@@ -4,6 +4,7 @@ import {
   TemplateRepository,
 } from "../domain";
 import { CreateTemplateDto } from "../domain/dtos";
+import { FilterDto } from "src/modules/base/domain/dtos";
 
 export class TemplateRepositoryImpl implements TemplateRepository {
   constructor(private readonly datasource: TemplateDatasource) {}
@@ -11,7 +12,9 @@ export class TemplateRepositoryImpl implements TemplateRepository {
   findById(id: string): Promise<TemplateEntity> {
     return this.datasource.findById(id);
   }
-  getAll(params?: any): Promise<TemplateEntity[]> {
+  getAll(
+    params: FilterDto
+  ): Promise<{ data: TemplateEntity[]; hasNextPage: boolean }> {
     return this.datasource.getAll(params);
   }
   create(dto: CreateTemplateDto): Promise<TemplateEntity> {

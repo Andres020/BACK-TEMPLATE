@@ -1,23 +1,26 @@
-import { UserEntity, UserRepository, UserDatasource } from "../domain";
+import { UserDatasource, UserEntity, UserRepository } from "../domain";
 import { CreateUserDto, UpdateUserDto } from "../domain/dtos";
+import { FilterDto } from "src/modules/base/domain/dtos";
 
 export class UserRepositoryImpl implements UserRepository {
   constructor(private readonly datasource: UserDatasource) {}
-  findAll(): Promise<UserEntity[]> {
-    return this.datasource.findAll();
-  }
 
-  findById(id: string): Promise<UserEntity> {
-    return this.datasource.findById(id);
-  }
   findByEmail(email: string): Promise<UserEntity> {
     return this.datasource.findByEmail(email);
   }
-  create(user: CreateUserDto): Promise<UserEntity> {
-    return this.datasource.create(user);
+  findById(id: string): Promise<UserEntity> {
+    return this.datasource.findById(id);
   }
-  update(user: UpdateUserDto): Promise<UserEntity> {
-    return this.datasource.update(user);
+  getAll(
+    params: FilterDto
+  ): Promise<{ data: UserEntity[]; hasNextPage: boolean }> {
+    return this.datasource.getAll(params);
+  }
+  create(dto: CreateUserDto): Promise<UserEntity> {
+    return this.datasource.create(dto);
+  }
+  update(dto: UpdateUserDto): Promise<UserEntity> {
+    return this.datasource.update(dto);
   }
   delete(id: string): Promise<UserEntity> {
     return this.datasource.delete(id);

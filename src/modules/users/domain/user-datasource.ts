@@ -1,12 +1,11 @@
-import { CreateUserDto, UpdateUserDto } from "./dtos";
+import { AbstractDatasource } from "src/modules/base/domain";
 import { UserEntity } from "./user-entity";
+import { CreateUserDto, UpdateUserDto } from "./dtos";
+import { LoginUserDto } from "./dtos/login-user-dto";
 
-export interface UserDatasource {
-  findById(id: string): Promise<UserEntity>;
-  findAll(): Promise<UserEntity[]>;
+export interface UserDatasource
+  extends AbstractDatasource<UserEntity, CreateUserDto, UpdateUserDto> {
   findByEmail(email: string): Promise<UserEntity>;
-
-  create(user: CreateUserDto): Promise<UserEntity>;
-  update(user: UpdateUserDto): Promise<UserEntity>;
-  delete(id: string): Promise<UserEntity>;
+  // register(createUserDto: CreateUserDto): Promise<UserEntity>;
+  // login(dto: LoginUserDto): Promise<{ data: UserEntity; token: string }>;
 }

@@ -1,7 +1,7 @@
 import { ITemplate, TemplateModel } from "src/data/models/Template";
-import { BaseDatasourceMongooseImpl } from "src/modules/base";
 import { TemplateDatasource, TemplateEntity } from "../domain";
 import { CreateTemplateDto } from "../domain/dtos";
+import { BaseDatasourceMongooseImpl } from "src/modules/base/infrastructure";
 
 export class TemplateDatasourceImpl
   extends BaseDatasourceMongooseImpl<

@@ -13,7 +13,7 @@ export class UserRoutes {
 
     router.get("/:id", userController.findById);
     router.get("/email/:email", userController.findByEmail);
-    router.get("/", userController.findAll);
+    router.get("/", userController.getAll);
     router.post("/", userController.create);
     router.put("/", userController.update);
     router.delete("/:id", userController.delete);
