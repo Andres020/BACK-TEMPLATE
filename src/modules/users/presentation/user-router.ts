@@ -15,6 +15,7 @@ export class UserRoutes {
     router.get("/email/:email", userController.findByEmail);
     router.get("/", userController.getAll);
     router.post("/", userController.create);
+    router.post("/filter", userController.getAll);
     router.post("/login", userController.login);
     router.put("/", userController.update);
     router.delete("/:id", userController.delete);

@@ -46,6 +46,7 @@ export class BaseDatasourceMongooseImpl<
       if (hasNextPage) {
         documents.pop(); // Remove the extra document
       }
+
       return { data: documents.map(this.entityFactory), hasNextPage };
     } catch (error) {
       throw CustomError.internal(`${error}`);
@@ -97,7 +98,9 @@ export class BaseDatasourceMongooseImpl<
   async register(createDto: CreateDto): Promise<E> {
     try {
       const document = new this.model(createDto);
-      (document as any).password = bcryptAdapter.hash((createDto as any).password);
+      (document as any).password = bcryptAdapter.hash(
+        (createDto as any).password
+      );
       await document.save();
       return this.entityFactory(document);
     } catch (error) {

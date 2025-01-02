@@ -7,6 +7,7 @@ import { CustomError } from "src/modules/errors";
 import { LoginUserDto } from "../domain/dtos/login-user-dto";
 import { bcryptAdapter } from "@config/bcrypt";
 import { JwtAdapter } from "@config/jwt";
+import { FilterDto } from "src/modules/base/domain/dtos";
 
 export class UserDatasourceImpl
   extends BaseDatasourceMongooseImpl<
@@ -20,6 +21,8 @@ export class UserDatasourceImpl
   constructor() {
     super(UserModel, UserEntity.fromObject);
   }
+
+
   async login(dto: LoginUserDto): Promise<{ data: UserEntity; token: string }> {
     const exitsUser = await this.findOne({ email: dto.email });
     if (!exitsUser)

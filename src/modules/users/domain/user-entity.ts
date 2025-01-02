@@ -21,4 +21,9 @@ export class UserEntity {
 
     return new UserEntity(id, name, email, password);
   }
+
+  toJSON(excludePassword: boolean = true) {
+    const { password, ...userWithoutPassword } = this;
+    return excludePassword ? userWithoutPassword : this;
+  }
 }
