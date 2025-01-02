@@ -3,6 +3,7 @@ import { UserRepository } from "../domain";
 import { CreateUserDto } from "../domain/dtos";
 import { FilterDto } from "src/modules/base/domain/dtos";
 import { CustomError } from "src/modules/errors";
+import { LoginUserDto } from "../domain/dtos/login-user-dto";
 
 export class UserController {
   constructor(private readonly userRepository: UserRepository) {}
@@ -71,4 +72,22 @@ export class UserController {
   };
 
   public findByEmail = (req: Request, res: Response) => {};
+
+  public login = (req: Request, res: Response) => {
+    const [error, data] = LoginUserDto.create(req.body);
+    if (error) throw res.status(400).json({ error });
+    
+    this.userRepository
+      .login(data!)
+      .then((user) => {
+        res.status(201).json(user);
+      })
+      .catch((error) => {
+        if (error instanceof CustomError) {
+          res.status(error.statusCode).json({ message: error.message });
+        } else {
+          res.status(500).json({ message: "Internal Server Error" });
+        }
+      });
+  };
 }
